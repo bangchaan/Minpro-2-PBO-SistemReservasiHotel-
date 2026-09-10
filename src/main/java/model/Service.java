@@ -8,13 +8,15 @@ public class Service {
     private ArrayList<Reservasi> daftarReservasi;
 
     private Scanner scanner;
-    private int nomorUrut;
+    private int nomorReservasi;
+    private int nomorKamar;
 
     public Service(Scanner scanner) {
         this.daftarKamar = new ArrayList<>();
         this.daftarReservasi = new ArrayList<>();
         this.scanner = scanner;
-        this.nomorUrut = 1;
+        this.nomorReservasi = 1;
+        this.nomorKamar = 1;
     }
 
 // Validator agar memastikan pengguna menginput tidak kosong
@@ -56,8 +58,8 @@ public class Service {
         String tipeKamar = inputTeks("Tipe Kamar: ");
         int harga = inputAngka("Harga per Malam: ");
 
-        int idKamar = nomorUrut;
-        nomorUrut++;
+        int idKamar = nomorKamar;
+        nomorKamar++;
 
         Kamar kamarBaru = new Kamar(idKamar, tipeKamar, harga);
         daftarKamar.add(kamarBaru);
@@ -113,8 +115,8 @@ public class Service {
         String namaTamu = inputTeks("Nama Tamu: ");
         int jumlahMalam = inputAngka("Jumlah Malam: ");
 
-        int idReservasi = nomorUrut;
-        nomorUrut++;
+        int idReservasi = nomorReservasi;
+        nomorReservasi++;
 
         Reservasi reservasiBaru = new Reservasi(idReservasi, namaTamu, kamarDipilih, jumlahMalam);
         daftarReservasi.add(reservasiBaru);
