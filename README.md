@@ -221,27 +221,20 @@ Class `Reservasi` menjadi superclass, sedangkan `ReservasiStandard` dan `Reserva
 
 ### 1. Reservasi Standard
 
-```java
-public class ReservasiStandard extends Reservasi {
-```
+<img width="528" height="80" alt="image" src="https://github.com/user-attachments/assets/6e7fb0cb-c33c-4b4d-960c-82fbeefc1f33" />
 
-Class `ReservasiStandard` mewarisi atribut dan method dari class `Reservasi`.
 
-Reservasi Standard memiliki karakteristik khusus berupa kebijakan **denda pembatalan 20%**.
-
-```java
-private int dendaPembatalanPersen;
-```
+Reservasi Standard memiliki karakteristik khusus berupa kebijakan **denda pembatalan 20%**. 
 
 Atribut tersebut digunakan untuk menentukan jumlah denda ketika reservasi Standard dibatalkan sebelum selesai.
 
 ### 2. Reservasi VIP
 
-```java
-public class ReservasiVIP extends Reservasi {
-```
 
-Class `ReservasiVIP` juga mewarisi atribut dan method dari class `Reservasi`.
+<img width="460" height="120" alt="image" src="https://github.com/user-attachments/assets/a7c47971-e4ad-478a-a0ff-cbd38d48f81e" />
+
+
+Class `ReservasiVIP` juga mewarisi atribut dan methoddari class `Reservasi`.
 
 Reservasi VIP memiliki karakteristik khusus berupa **jenis penyambutan**.
 
