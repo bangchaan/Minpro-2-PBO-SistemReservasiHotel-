@@ -2,22 +2,27 @@ package model;
 
 public class ReservasiStandard extends Reservasi {
 
-    private int dendaPembatalanPersen;
+    private int dendaPersen;
 
-    public ReservasiStandard(int idReservasi, String namaTamu, int jumlahMalam) {
+    public ReservasiStandard(int idReservasi, String namaTamu,
+            int jumlahMalam) {
+
         super(idReservasi, namaTamu, jumlahMalam, 300000);
-        setDendaPembatalanPersen(20); // kebijakan hotel
+
+        setDendaPersen(20);
     }
 
-    public int getDendaPembatalanPersen() { return dendaPembatalanPersen; }
-
-    public void setDendaPembatalanPersen(int dendaPembatalanPersen) {
-        if (dendaPembatalanPersen < 0 || dendaPembatalanPersen > 100) {
-        throw new IllegalArgumentException("Persentase denda harus antara 0 - 100.");
+    public int getDendaPersen() {
+        return dendaPersen;
     }
-    this.dendaPembatalanPersen = dendaPembatalanPersen;
-}
-        
+
+    public void setDendaPersen(int dendaPersen) {
+        if (dendaPersen >= 0 && dendaPersen <= 100) {
+            this.dendaPersen = dendaPersen;
+        } else {
+            this.dendaPersen = 20;
+        }
+    }
 
     @Override
     public String getTipe() {
@@ -26,11 +31,11 @@ public class ReservasiStandard extends Reservasi {
 
     @Override
     public int hitungDenda() {
-        return hitungTotalBiaya() * dendaPembatalanPersen / 100;
+        return hitungTotalBiaya() * dendaPersen / 100;
     }
 
     @Override
     public String getDetailTambahan() {
-        return "-";
+        return "Denda batal: " + dendaPersen + "%";
     }
 }

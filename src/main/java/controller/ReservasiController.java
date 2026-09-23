@@ -7,12 +7,11 @@ import model.ReservasiStandard;
 import model.ReservasiVIP;
 import view.ReservasiView;
 
-
 public class ReservasiController {
 
-    private final ArrayList<Reservasi> daftarReservasi = new ArrayList<>();
-    private final ReservasiView view;
-    private final Scanner scanner;
+    private ArrayList<Reservasi> daftarReservasi = new ArrayList<>();
+    private ReservasiView view;
+    private Scanner scanner;
     private int idBerikutnya = 1;
 
     public ReservasiController(ReservasiView view, Scanner scanner) {
@@ -23,7 +22,8 @@ public class ReservasiController {
 
     private void isiDummyData() {
         buatStandard("Budi Santoso", 2);
-        buatVip("Siti Aminah", 3, ReservasiVIP.PENYAMBUTAN_LOUNGE ).checkIn();
+
+        buatVip("Siti Aminah", 3, ReservasiVIP.PENYAMBUTAN_LOUNGE).checkIn();
 
         Reservasi selesai = buatStandard("Andi Wijaya", 1);
         selesai.checkIn();
@@ -44,98 +44,154 @@ public class ReservasiController {
         return r;
     }
 
-    public void tambahReservasi() {
+    public void jalankan() {
+        boolean berjalan = true;
+
+        while (berjalan) {
+            view.tampilkanMenu();
+            int pilihan = inputAngka("Pilih menu: ", 0, 6);
+
+            switch (pilihan) {
+                case 1:
+                    tambahReservasi();
+                    break;
+                case 2:
+                    view.tampilkanDaftar(daftarReservasi);
+                    break;
+                case 3:
+                    checkInReservasi();
+                    break;
+                case 4:
+                    checkOutReservasi();
+                    break;
+                case 5:
+                    updateReservasi();
+                    break;
+                case 6:
+                    hapusReservasi();
+                    break;
+                case 0:
+                    berjalan = false;
+                    view.tampilkanPesan("Terima kasih!");
+                    break;
+            }
+        }
+    }
+
+    private void tambahReservasi() {
         System.out.println("\n--- TAMBAH RESERVASI ---");
-        System.out.println("1. Standard (Rp300.000/malam, denda pembatalan 20%)");
-        System.out.println("2. VIP (Rp750.000/malam + layanan Rp100.000)");
-        int jenis = inputAngka("Pilih tipe (1-2): ", 1, 2);
+        view.tampilkanPilihanTipe();
+
+        int tipe = inputAngka("Pilih tipe (1-2): ", 1, 2);
         String nama = inputTeks("Nama tamu: ");
         int malam = inputAngka("Jumlah malam (1-30): ", 1, 30);
 
-        Reservasi r;
-        if (jenis == 2) {
-            System.out.println("Pilih jenis penyambutan:");
-            System.out.println("1. Reguler (tanpa tambahan biaya)");
-            System.out.println("2. Executive Lounge (+Rp100.000)");
-            System.out.println("3. Airport Pickup + Lounge (+Rp200.000)");
-            int pilihanPenyambutan = inputAngka("Pilih (1-3): ", 1, 3);
+        Reservasi baru;
 
-            String jenisPenyambutan;
-            if (pilihanPenyambutan == 2) {
-                jenisPenyambutan = ReservasiVIP.PENYAMBUTAN_LOUNGE ;
-            } else if (pilihanPenyambutan == 3) {
-                jenisPenyambutan = ReservasiVIP.PENYAMBUTAN_AIRPORT ;
-            } else {
-                jenisPenyambutan = ReservasiVIP.PENYAMBUTAN_REGULER ;
-            }
-            r = buatVip(nama, malam, jenisPenyambutan);
+        if (tipe == 1) {
+            baru = buatStandard(nama, malam);
         } else {
-            r = buatStandard(nama, malam);
+            view.tampilkanPilihanLayanan();
+
+            int pilihan = inputAngka("Pilih layanan (1-3): ", 1, 3);
+            String jenis;
+
+            if (pilihan == 2) {
+                jenis = ReservasiVIP.PENYAMBUTAN_LOUNGE;
+            } else if (pilihan == 3) {
+                jenis = ReservasiVIP.PENYAMBUTAN_AIRPORT;
+            } else {
+                jenis = ReservasiVIP.PENYAMBUTAN_REGULER;
+            }
+
+            baru = buatVip(nama, malam, jenis);
         }
 
-        view.tampilkanPesan(">> Berhasil! ID reservasi: " + r.getIdReservasi());
+        view.tampilkanPesan(">> Reservasi berhasil! ID: " + baru.getIdReservasi());
     }
 
-    public void tampilkanReservasi() {
-        view.tampilkanDaftarReservasi(daftarReservasi);
-    }
-
-    public void checkInReservasi() {
-        System.out.println("\n--- CHECK-IN TAMU ---");
+    private void checkInReservasi() {
         int id = inputAngka("ID reservasi: ", 1, Integer.MAX_VALUE);
         Reservasi r = cari(id);
+
         if (r != null && r.checkIn()) {
             view.tampilkanPesan(">> Check-in berhasil.");
         } else {
-            view.tampilkanPesan(">> Gagal: ID tidak ditemukan / status bukan 'Menunggu'.");
+            view.tampilkanPesan(">> Gagal: ID tidak ditemukan atau status bukan Menunggu.");
         }
     }
 
-    public void checkOutReservasi() {
-        System.out.println("\n--- CHECK-OUT TAMU ---");
+    private void checkOutReservasi() {
         int id = inputAngka("ID reservasi: ", 1, Integer.MAX_VALUE);
         Reservasi r = cari(id);
+
         if (r != null && r.checkOut()) {
             view.tampilkanPesan(">> Check-out berhasil.");
         } else {
-            view.tampilkanPesan(">> Gagal: ID tidak ditemukan / tamu belum check-in.");
+            view.tampilkanPesan(">> Gagal: ID tidak ditemukan atau belum check-in.");
         }
     }
 
-    public void updateReservasi() {
-        System.out.println("\n--- UPDATE JUMLAH MALAM ---");
+    private void updateReservasi() {
         int id = inputAngka("ID reservasi: ", 1, Integer.MAX_VALUE);
         Reservasi r = cari(id);
+
         if (r == null) {
             view.tampilkanPesan(">> ID tidak ditemukan.");
             return;
         }
-        if (r.getStatus().equals(Reservasi.CHECK_OUT)) {
-            view.tampilkanPesan(">> Gagal: tamu sudah check-out.");
-            return;
+
+        boolean vip = r instanceof ReservasiVIP;
+        view.tampilkanMenuUpdate(vip);
+
+        int batas = vip ? 3 : 2;
+        int pilihan = inputAngka("Pilih: ", 0, batas);
+
+        if (pilihan == 1) {
+            String namaBaru = inputTeks("Nama baru: ");
+            r.setNamaTamu(namaBaru);
+            view.tampilkanPesan(">> Nama berhasil diperbarui.");
+
+        } else if (pilihan == 2) {
+            int malamBaru = inputAngka("Jumlah malam baru (1-30): ", 1, 30);
+            r.setJumlahMalam(malamBaru);
+            view.tampilkanPesan(">> Jumlah malam berhasil diperbarui.");
+
+        } else if (pilihan == 3 && vip) {
+            ReservasiVIP reservasiVIP = (ReservasiVIP) r;
+            view.tampilkanPilihanLayanan();
+
+            int layanan = inputAngka("Pilih layanan (1-3): ", 1, 3);
+
+            if (layanan == 1) {
+                reservasiVIP.setJenisPenyambutan(ReservasiVIP.PENYAMBUTAN_REGULER);
+            } else if (layanan == 2) {
+                reservasiVIP.setJenisPenyambutan(ReservasiVIP.PENYAMBUTAN_LOUNGE);
+            } else {
+                reservasiVIP.setJenisPenyambutan(ReservasiVIP.PENYAMBUTAN_AIRPORT);
+            }
+
+            view.tampilkanPesan(">> Layanan tambahan berhasil diperbarui.");
         }
-        int malamBaru = inputAngka("Jumlah malam baru (1-30): ", 1, 30);
-        r.setJumlahMalam(malamBaru);
-        view.tampilkanPesan(">> Data berhasil diperbarui.");
     }
 
-    public void hapusReservasi() {
-        System.out.println("\n--- HAPUS RESERVASI ---");
+    private void hapusReservasi() {
         int id = inputAngka("ID reservasi: ", 1, Integer.MAX_VALUE);
         Reservasi r = cari(id);
+
         if (r == null) {
             view.tampilkanPesan(">> ID tidak ditemukan.");
             return;
         }
 
         int denda = r.hitungDenda();
-        if (denda > 0 && !r.getStatus().equals(Reservasi.CHECK_OUT)) {
-            view.tampilkanPesan(">> Dibatalkan sebelum selesai, kena denda pembatalan: Rp"
-                    + String.format("%,d", denda));
+
+        if (denda > 0 && !Reservasi.CHECK_OUT.equals(r.getStatus())) {
+            view.tampilkanPesan(">> Denda pembatalan: Rp" + String.format("%,d", denda));
         }
 
         daftarReservasi.remove(r);
-        view.tampilkanPesan(">> Reservasi dihapus.");
+        view.tampilkanPesan(">> Reservasi berhasil dihapus.");
     }
 
     private Reservasi cari(int id) {
@@ -147,31 +203,38 @@ public class ReservasiController {
         return null;
     }
 
-    public int inputAngka(String prompt, int min, int max) {
+    public int inputAngka(String pesan, int min, int max) {
         while (true) {
-            System.out.print(prompt);
-            String teks = scanner.nextLine().trim();
+            System.out.print(pesan);
+            String input = scanner.nextLine();
+
             try {
-                int angka = Integer.parseInt(teks);
+                int angka = Integer.parseInt(input);
+
                 if (angka >= min && angka <= max) {
                     return angka;
                 }
-                System.out.println(">> Angka harus antara " + min + " dan " + max + ".");
+
+                System.out.println(">> Angka harus " + min + " sampai " + max + ".");
+
             } catch (NumberFormatException e) {
                 System.out.println(">> Input harus berupa angka.");
             }
         }
     }
 
-    private String inputTeks(String prompt) {
-        String teks;
-        do {
-            System.out.print(prompt);
-            teks = scanner.nextLine().trim();
+    private String inputTeks(String pesan) {
+        while (true) {
+            System.out.print(pesan);
+            String teks = scanner.nextLine().trim();
+
             if (teks.isEmpty()) {
-                System.out.println(">> Input tidak boleh kosong!");
+                System.out.println(">> Input tidak boleh kosong.");
+            } else if (teks.length() > Reservasi.MAKS_NAMA) {
+                System.out.println(">> Nama maksimal " + Reservasi.MAKS_NAMA + " karakter.");
+            } else {
+                return teks;
             }
-        } while (teks.isEmpty());
-        return teks;
+        }
     }
 }

@@ -2,6 +2,8 @@ package model;
 
 public class Reservasi {
 
+    public static final int MAKS_NAMA = 25;
+
     public static final String MENUNGGU = "Menunggu";
     public static final String CHECK_IN = "Check-In";
     public static final String CHECK_OUT = "Check-Out";
@@ -12,33 +14,51 @@ public class Reservasi {
     private int jumlahMalam;
     private String status;
 
-    public Reservasi(int idReservasi, String namaTamu, int jumlahMalam, int hargaPerMalam) {
+    public Reservasi(int idReservasi, String namaTamu,
+            int jumlahMalam, int hargaPerMalam) {
+
         this.idReservasi = idReservasi;
         this.hargaPerMalam = hargaPerMalam;
+        this.status = MENUNGGU;
+
         setNamaTamu(namaTamu);
         setJumlahMalam(jumlahMalam);
-        this.status = MENUNGGU;
     }
 
-    public int getIdReservasi() { return idReservasi; }
-    public String getNamaTamu() { return namaTamu; }
-    public int getJumlahMalam() { return jumlahMalam; }
-    public String getStatus() { return status; }
-    public int getHargaPerMalam() { return hargaPerMalam; }
+    public int getIdReservasi() {
+        return idReservasi;
+    }
+
+    public int getHargaPerMalam() {
+        return hargaPerMalam;
+    }
+
+    public String getNamaTamu() {
+        return namaTamu;
+    }
+
+    public int getJumlahMalam() {
+        return jumlahMalam;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 
     public void setNamaTamu(String namaTamu) {
-        if (namaTamu == null || namaTamu.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nama tamu tidak boleh kosong.");
+        if (namaTamu != null && !namaTamu.trim().isEmpty()) {
+            this.namaTamu = namaTamu.trim();
+        } else {
+            this.namaTamu = "Tanpa Nama";
         }
-        this.namaTamu = namaTamu.trim();
     }
 
     public void setJumlahMalam(int jumlahMalam) {
-        // Diperbaiki: Menggunakan operator || (OR)
-        if (jumlahMalam < 1 || jumlahMalam > 30) {
-            throw new IllegalArgumentException("Jumlah malam harus 1 - 30.");
+        if (jumlahMalam >= 1 && jumlahMalam <= 30) {
+            this.jumlahMalam = jumlahMalam;
+        } else {
+            this.jumlahMalam = 1;
         }
-        this.jumlahMalam = jumlahMalam;
     }
 
     public boolean checkIn() {
