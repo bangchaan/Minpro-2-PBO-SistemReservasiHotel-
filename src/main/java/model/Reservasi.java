@@ -1,54 +1,75 @@
 package model;
 
 public class Reservasi {
-    private int idReservasi;
+
+    public static final String MENUNGGU = "Menunggu";
+    public static final String CHECK_IN = "Check-In";
+    public static final String CHECK_OUT = "Check-Out";
+
+    private final int idReservasi;
+    private final int hargaPerMalam;
     private String namaTamu;
-    private Kamar kamar;
     private int jumlahMalam;
+    private String status;
 
-    public Reservasi(int idReservasi, String namaTamu, Kamar kamar, int jumlahMalam) {
+    public Reservasi(int idReservasi, String namaTamu, int jumlahMalam, int hargaPerMalam) {
         this.idReservasi = idReservasi;
-        this.namaTamu = namaTamu;
-        this.kamar = kamar;
-        this.jumlahMalam = validasiJumlah(jumlahMalam);
+        this.hargaPerMalam = hargaPerMalam;
+        setNamaTamu(namaTamu);
+        setJumlahMalam(jumlahMalam);
+        this.status = MENUNGGU;
     }
 
-    // Validator umlah malam tidak boleh 0 atau minus.
-    private int validasiJumlah(int jumlahMalam) {
-        if (jumlahMalam <= 0) {
-            System.out.println("Jumlah malam tidak valid (harus > 0), otomatis diset ke 1.");
-            return 1;
+    public int getIdReservasi() { return idReservasi; }
+    public String getNamaTamu() { return namaTamu; }
+    public int getJumlahMalam() { return jumlahMalam; }
+    public String getStatus() { return status; }
+    public int getHargaPerMalam() { return hargaPerMalam; }
+
+    public void setNamaTamu(String namaTamu) {
+        if (namaTamu == null || namaTamu.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nama tamu tidak boleh kosong.");
         }
-        return jumlahMalam;
-    }
-
-    public int getIdReservasi() {
-        return idReservasi;
-    }
-
-    public String getNamaTamu() {
-        return namaTamu;
-    }
-
-    public Kamar getKamar() {
-        return kamar;
-    }
-
-    public int getJumlahMalam() {
-        return jumlahMalam;
+        this.namaTamu = namaTamu.trim();
     }
 
     public void setJumlahMalam(int jumlahMalam) {
-        this.jumlahMalam = validasiJumlah(jumlahMalam);
+        // Diperbaiki: Menggunakan operator || (OR)
+        if (jumlahMalam < 1 || jumlahMalam > 30) {
+            throw new IllegalArgumentException("Jumlah malam harus 1 - 30.");
+        }
+        this.jumlahMalam = jumlahMalam;
+    }
+
+    public boolean checkIn() {
+        if (status.equals(MENUNGGU)) {
+            status = CHECK_IN;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkOut() {
+        if (status.equals(CHECK_IN)) {
+            status = CHECK_OUT;
+            return true;
+        }
+        return false;
+    }
+
+    public String getTipe() {
+        return "Umum";
     }
 
     public int hitungTotalBiaya() {
-        return jumlahMalam * kamar.getHargaPerMalam();
+        return jumlahMalam * hargaPerMalam;
     }
 
-    public void tampilkanInfo() {
-    System.out.printf("%-6d | %-15s | %-6d | %-10s | %-6d | Rp%-14d%n",
-            idReservasi, namaTamu, kamar.getIdKamar(), kamar.getTipeKamar(),
-            jumlahMalam, hitungTotalBiaya());
-}
+    public int hitungDenda() {
+        return 0;
     }
+
+    public String getDetailTambahan() {
+        return "-";
+    }
+}
