@@ -2,10 +2,10 @@
 
 ---
 
-## SISTEM TRACKING RESERVASI HOTEL
+## SISTEM RESERVASI HOTEL
 
-**Nama:** Aulia  
-**NIM:** [Isi NIM]
+**Nama:** Aulia Aisyah Al Humaira
+**NIM:** 2509116029
 
 ---
 
@@ -31,14 +31,9 @@ Dalam pembuatannya, program menerapkan beberapa konsep Pemrograman Berorientasi 
 
 Sistem Tracking Reservasi Hotel dirancang dengan tujuan sebagai berikut:
 
-- Membantu mengelola data reservasi hotel secara lebih terstruktur.
-- Memudahkan pengguna dalam menambahkan dan menampilkan data reservasi.
-- Memudahkan proses tracking status tamu melalui fitur check-in dan check-out.
-- Memungkinkan pengguna memperbarui jumlah malam pada reservasi.
-- Memudahkan pengguna menghapus data reservasi yang sudah tidak diperlukan.
-- Menerapkan konsep Pemrograman Berorientasi Objek dalam program Java.
-- Menerapkan konsep MVC agar struktur program lebih terorganisir.
-
+- Membantu mengelola data reservasi hotel secara terstruktur.
+- Memudahkan proses tambah, tampil, update, dan hapus data reservasi.
+- Memudahkan tracking status tamu melalui proses check-in dan check-out
 ---
 
 ## 1.3 Alur Singkat
@@ -61,234 +56,119 @@ Program akan terus berjalan sampai pengguna memilih menu **Keluar**.
 
 ## 2.1 Menu Utama
 
-Menu utama digunakan sebagai pusat navigasi pengguna dalam mengelola data reservasi hotel.
+<img width="380" height="273" alt="image" src="https://github.com/user-attachments/assets/52b89b24-3bd3-4255-b98a-5b856691de1c" />
 
-Pilihan menu yang tersedia adalah:
 
-1. Tambah Reservasi
-2. Tampilkan Semua Reservasi
-3. Check-In Tamu
-4. Check-Out Tamu
-5. Update Jumlah Malam
-6. Hapus Reservasi
-0. Keluar
+Gambar di atas menampilkan Menu Utama dari program Sistem Tracking Reservasi Hotel. Menu ini menjadi tampilan awal yang digunakan sebagai pusat navigasi bagi pengguna dalam mengelola data reservasi hotel. Terdapat beberapa pilihan menu, yaitu Tambah Reservasi untuk menambahkan data reservasi baru, Tampilkan Semua Reservasi untuk melihat seluruh data reservasi yang telah tersimpan, Check-In Tamu dan Check-Out Tamu untuk mengubah status reservasi, Update Jumlah Malam untuk memperbarui lama menginap, Hapus Reservasi untuk menghapus data reservasi, serta Keluar untuk mengakhiri program.
 
-Pengguna dapat memilih menu berdasarkan proses yang ingin dilakukan. Setiap pilihan akan menjalankan proses yang sesuai melalui `ReservasiController`.
-
-### Tampilan Menu Utama
-
-```text
-==============================
-   TRACKING RESERVASI HOTEL
-==============================
-1. Tambah Reservasi
-2. Tampilkan Semua Reservasi
-3. Check-In Tamu
-4. Check-Out Tamu
-5. Update Jumlah Malam
-6. Hapus Reservasi
-0. Keluar
-```
+Pengguna dapat memilih menu sesuai dengan kebutuhan pengelolaan reservasi melalui pilihan nomor yang tersedia. Dengan adanya Menu Utama ini, proses pengelolaan dan tracking data reservasi hotel dapat dilakukan secara lebih terstruktur dan mudah digunakan.
 
 ---
 
 ## 2.2 Menu Tambah Reservasi
 
-Menu Tambah Reservasi digunakan untuk memasukkan data reservasi baru ke dalam sistem.
+<img width="557" height="150" alt="image" src="https://github.com/user-attachments/assets/ca92f490-3e1e-423d-85d6-d846f6a43589" />
 
-Pengguna dapat memilih dua jenis reservasi:
+Gambar di atas menampilkan Menu Tambah Reservasi pada program Sistem Tracking Reservasi Hotel. Menu ini digunakan untuk menambahkan data reservasi baru ke dalam sistem. Pengguna dapat memilih jenis reservasi yang ingin dibuat, yaitu Reservasi Standard atau Reservasi VIP.
 
-```text
---- TAMBAH RESERVASI ---
-1. Standard (Rp300.000/malam, denda pembatalan 20%)
-2. VIP (Rp750.000/malam + layanan Rp100.000)
-```
+Reservasi Standard memiliki harga Rp300.000 per malam dengan ketentuan denda pembatalan sebesar 20%, sedangkan Reservasi VIP memiliki harga Rp750.000 per malam dengan tambahan layanan sebesar Rp100.000. Setelah memilih jenis reservasi, pengguna akan melanjutkan proses dengan memasukkan data yang diperlukan sesuai dengan jenis reservasi yang dipilih.
 
-Setelah memilih jenis reservasi, pengguna memasukkan nama tamu dan jumlah malam.
+Dengan adanya menu ini, pengguna dapat menentukan jenis reservasi sesuai kebutuhan sebelum memasukkan data tamu dan informasi reservasi.
 
 ### 2.2.1 Tambah Reservasi Standard
 
-Pada reservasi Standard, sistem menetapkan harga kamar sebesar **Rp300.000 per malam**.
+<img width="541" height="173" alt="image" src="https://github.com/user-attachments/assets/d476d9e4-466f-43d1-952e-51b6368ba481" />
 
-Reservasi Standard memiliki atribut khusus berupa **denda pembatalan sebesar 20%**. Denda tersebut digunakan ketika reservasi dihapus sebelum status Check-Out.
 
-Contoh data:
+Gambar di atas menampilkan proses penambahan Reservasi Standard pada program Sistem Tracking Reservasi Hotel. Pengguna memilih tipe reservasi Standard, kemudian memasukkan nama tamu dan jumlah malam menginap.
 
-```text
---- TAMBAH RESERVASI ---
-1. Standard (Rp300.000/malam, denda pembatalan 20%)
-2. VIP (Rp750.000/malam + layanan Rp100.000)
+Reservasi Standard memiliki atribut khusus `dendaPembatalanPersen` yang digunakan untuk menentukan persentase denda apabila reservasi dibatalkan sebelum proses check-out. Nilai denda yang digunakan dalam program adalah 20%.
 
-Pilih tipe (1-2): 1
-Nama tamu: Budi Santoso
-Jumlah malam (1-30): 2
-
->> Berhasil! ID reservasi: 4
-```
-
-Data reservasi Standard kemudian disimpan ke dalam `ArrayList<Reservasi>`.
+Pada contoh tersebut, tamu melakukan reservasi Standard selama 2 malam. Setelah data berhasil dimasukkan, sistem memberikan ID reservasi secara otomatis.
 
 ---
 
 ## 2.2.2 Tambah Reservasi VIP
 
-Pada reservasi VIP, sistem menetapkan harga kamar sebesar **Rp750.000 per malam**.
+<img width="555" height="277" alt="image" src="https://github.com/user-attachments/assets/69657d4a-a4cf-42d1-af1f-79ca5f8d01f6" />
 
-Reservasi VIP memiliki pilihan jenis penyambutan yang dapat memengaruhi biaya reservasi.
+Gambar di atas menampilkan proses penambahan Reservasi VIP pada program Sistem Tracking Reservasi Hotel. Pengguna memilih tipe reservasi VIP, kemudian memasukkan nama tamu dan jumlah malam menginap. Setelah itu, pengguna memilih jenis penyambutan yang tersedia, yaitu Reguler, Executive Lounge, atau Airport Pickup + Lounge. 
 
-Pilihan penyambutan yang tersedia:
-
-```text
-Pilih jenis penyambutan:
-1. Reguler (tanpa tambahan biaya)
-2. Executive Lounge (+Rp100.000)
-3. Airport Pickup + Lounge (+Rp200.000)
-```
-
-Jenis penyambutan digunakan untuk menentukan layanan tambahan dan biaya yang akan ditambahkan ke total biaya reservasi VIP.
-
-Contoh:
-
-```text
---- TAMBAH RESERVASI ---
-1. Standard (Rp300.000/malam, denda pembatalan 20%)
-2. VIP (Rp750.000/malam + layanan Rp100.000)
-
-Pilih tipe (1-2): 2
-Nama tamu: Siti Aminah
-Jumlah malam (1-30): 3
-
-Pilih jenis penyambutan:
-1. Reguler (tanpa tambahan biaya)
-2. Executive Lounge (+Rp100.000)
-3. Airport Pickup + Lounge (+Rp200.000)
-
-Pilih (1-3): 2
-
->> Berhasil! ID reservasi: 5
-```
+Pada contoh tersebut, tamu bernama Lia melakukan reservasi selama 10 malam dan memilih jenis penyambutan Executive Lounge. Setelah data berhasil dimasukkan, sistem memberikan ID reservasi secara otomatis, yaitu ID 5.
 
 ---
 
 ## 2.3 Menu Tampilkan Reservasi
 
-Menu Tampilkan Reservasi digunakan untuk melihat seluruh data reservasi yang tersimpan di dalam sistem.
+<img width="1171" height="221" alt="Screenshot 2026-09-23 220612" src="https://github.com/user-attachments/assets/a54efbc6-0c3e-469e-bfc2-707bfa4862ef" />
 
-Informasi yang ditampilkan meliputi:
 
-- ID reservasi
-- Nama tamu
-- Tipe reservasi
-- Jumlah malam
-- Status
-- Total biaya
-- Detail tambahan
+Gambar di atas menampilkan Daftar Reservasi pada program Sistem Tracking Reservasi Hotel. Menu ini digunakan untuk melihat seluruh data reservasi yang telah tersimpan di dalam sistem. Informasi yang ditampilkan meliputi ID reservasi, nama tamu, tipe reservasi, jumlah malam, status, total biaya, dan detail tambahan.
 
-Contoh tampilan:
+Pada daftar tersebut terdapat reservasi Standard dan VIP dengan status yang berbeda, yaitu Menunggu, Check-In, dan Check-Out. Pada reservasi VIP, bagian detail juga menampilkan jenis penyambutan yang dipilih beserta biaya tambahannya.
 
-```text
---- DAFTAR RESERVASI ---
-
-ID   | Nama Tamu       | Tipe     | Malam | Status    | Total Biaya | Detail
---------------------------------------------------------------------------------
-1    | Budi Santoso    | Standard | 2     | Menunggu  | Rp600000    | -
-2    | Siti Aminah     | VIP      | 3     | Check-In  | Rp2350000   | Penyambutan: Executive Lounge (+Rp100,000)
-3    | Andi Wijaya     | Standard | 1     | Check-Out | Rp300000    | -
-```
-
-Data ditampilkan berdasarkan isi `ArrayList<Reservasi>` yang dikelola oleh `ReservasiController`.
+Dengan adanya menu ini, pengguna dapat melihat dan memantau data serta status seluruh reservasi yang tersimpan dalam sistem.
 
 ---
 
 ## 2.4 Menu Check-In
 
-Menu Check-In digunakan untuk mengubah status reservasi dari **Menunggu** menjadi **Check-In**.
+<img width="292" height="82" alt="Screenshot 2026-09-23 220927" src="https://github.com/user-attachments/assets/26ecf010-502e-4969-9a23-efa124020e0f" />
 
-Pengguna memasukkan ID reservasi yang ingin dilakukan check-in.
 
-Contoh:
+Gambar di atas menampilkan proses Check-In Tamu pada program Sistem Tracking Reservasi Hotel. Pengguna perlu memasukkan ID reservasi yang ingin melakukan check-in. Pada contoh tersebut, pengguna memasukkan ID reservasi 4 dan sistem menampilkan pesan bahwa check-in berhasil.
 
-```text
---- CHECK-IN TAMU ---
-ID reservasi: 1
+<img width="685" height="201" alt="Screenshot 2026-09-23 220945" src="https://github.com/user-attachments/assets/4091a965-78c1-4530-be4d-55a66fa5f1b5" />
 
->> Check-in berhasil.
-```
 
-Jika status reservasi bukan Menunggu atau ID tidak ditemukan, sistem akan menampilkan pesan kegagalan.
+Setelah proses check-in berhasil, status reservasi dengan ID 4 yang sebelumnya **Menunggu** berubah menjadi **Check-In**. Perubahan status tersebut dapat dilihat pada daftar reservasi setelah proses dilakukan.
 
-Fitur ini digunakan untuk membantu proses tracking kedatangan tamu.
+Fitur Check-In digunakan untuk mencatat bahwa tamu telah melakukan proses masuk ke hotel sehingga status reservasi dapat diperbarui sesuai dengan kondisi tamu.
 
 ---
 
 ## 2.5 Menu Check-Out
 
-Menu Check-Out digunakan untuk mengubah status reservasi dari **Check-In** menjadi **Check-Out**.
+<img width="293" height="111" alt="image" src="https://github.com/user-attachments/assets/dfe58c77-b35d-4c73-8f88-008a5452f22d" />
 
-Pengguna memasukkan ID reservasi yang ingin dilakukan check-out.
+Gambar di atas menampilkan proses Check-Out Tamu pada program Sistem Tracking Reservasi Hotel. Pengguna perlu memasukkan ID reservasi yang ingin melakukan check-out. Pada contoh tersebut, pengguna memasukkan ID reservasi 4 dan sistem menampilkan pesan bahwa check-out berhasil.
 
-Contoh:
 
-```text
---- CHECK-OUT TAMU ---
-ID reservasi: 1
+<img width="1162" height="192" alt="image" src="https://github.com/user-attachments/assets/e5898219-7fc9-4751-9613-245a656f0b63" />
 
->> Check-out berhasil.
-```
+Setelah proses check-out berhasil, status reservasi dengan ID 4 yang sebelumnya **Check-In** berubah menjadi **Check-Out**. Perubahan status tersebut dapat dilihat pada daftar reservasi setelah proses dilakukan.
 
-Check-out hanya dapat dilakukan jika tamu sebelumnya sudah melakukan check-in.
+Fitur Check-Out digunakan untuk mencatat bahwa tamu telah selesai menginap dan keluar dari hotel. Dengan adanya fitur ini, status reservasi dapat diperbarui sesuai dengan kondisi tamu.
 
-Dengan demikian, alur status reservasi adalah:
-
-```text
-Menunggu
-   ↓
-Check-In
-   ↓
-Check-Out
-```
 
 ---
 
 ## 2.6 Menu Update
 
-Menu Update digunakan untuk memperbarui jumlah malam pada suatu reservasi.
+<img width="326" height="107" alt="image" src="https://github.com/user-attachments/assets/b3df9b86-ca44-4532-8489-11af040d54c1" />
 
-Pengguna memasukkan ID reservasi, kemudian memasukkan jumlah malam yang baru.
+Gambar di atas menampilkan proses Update Jumlah Malam pada program Sistem Tracking Reservasi Hotel. Pengguna perlu memasukkan ID reservasi yang ingin diperbarui, kemudian memasukkan jumlah malam yang baru. Pada contoh tersebut, pengguna memilih ID reservasi 5 dan mengubah jumlah malam menjadi 13 malam.
 
-Contoh:
+<img width="1177" height="210" alt="image" src="https://github.com/user-attachments/assets/87c2f9c8-37e4-4240-b822-36699f5babfe" />
 
-```text
---- UPDATE JUMLAH MALAM ---
-ID reservasi: 1
-Jumlah malam baru (1-30): 4
+Setelah proses update berhasil, jumlah malam pada reservasi tersebut berubah dari 10 malam menjadi 13 malam. Perubahan tersebut juga memengaruhi total biaya reservasi VIP karena total biaya dihitung berdasarkan jumlah malam dan biaya penyambutan yang dipilih.
 
->> Data berhasil diperbarui.
-```
-
-Reservasi yang sudah berstatus Check-Out tidak dapat diperbarui karena proses menginapnya sudah selesai.
+Dengan adanya fitur ini, pengguna dapat memperbarui lama menginap pada reservasi yang masih aktif tanpa perlu membuat reservasi baru.
 
 ---
 
 ## 2.7 Menu Hapus
 
-Menu Hapus digunakan untuk menghapus data reservasi dari sistem.
+<img width="672" height="128" alt="image" src="https://github.com/user-attachments/assets/66c031b2-d857-4ac0-a19d-583829d04fb5" />
 
-Pengguna memasukkan ID reservasi yang ingin dihapus.
+Gambar di atas menampilkan proses Hapus Reservasi pada program Sistem Tracking Reservasi Hotel. Pengguna perlu memasukkan ID reservasi yang ingin dihapus. Pada contoh tersebut, pengguna memilih ID reservasi 1 yang berstatus Menunggu.
 
-Pada reservasi Standard, jika reservasi dihapus sebelum Check-Out, sistem akan menghitung denda pembatalan sebesar 20% dari total biaya reservasi.
+<img width="1178" height="213" alt="Screenshot 2026-09-23 222535" src="https://github.com/user-attachments/assets/092e4d7b-ae5c-4c61-86e7-514e690fe45a" />
 
-Contoh:
 
-```text
---- HAPUS RESERVASI ---
-ID reservasi: 1
+Karena reservasi Standard tersebut dibatalkan sebelum proses Check-Out, sistem menghitung denda pembatalan sebesar 20% dari total biaya reservasi. Dengan jumlah biaya Rp600.000, denda yang dikenakan adalah Rp120.000. Setelah proses selesai, data reservasi berhasil dihapus dari daftar reservasi.
 
->> Dibatalkan sebelum selesai, kena denda pembatalan: Rp120,000
->> Reservasi dihapus.
-```
-
-Jika reservasi sudah berstatus Check-Out, denda pembatalan tidak dikenakan.
+Gambar berikutnya menunjukkan bahwa reservasi dengan ID 1 sudah tidak terdapat dalam daftar. Dengan adanya fitur ini, pengguna dapat menghapus data reservasi yang sudah tidak diperlukan sekaligus menerapkan aturan denda pembatalan pada Reservasi Standard.
 
 ---
 
@@ -296,11 +176,6 @@ Jika reservasi sudah berstatus Check-Out, denda pembatalan tidak dikenakan.
 
 Menu Keluar digunakan untuk menghentikan program.
 
-Ketika pengguna memilih menu 0, program akan berhenti dan menampilkan pesan:
-
-```text
-Terima kasih!
-```
 
 ---
 
@@ -308,53 +183,23 @@ Terima kasih!
 
 ## 3.1 MVC (Model View Controller)
 
-Program Sistem Tracking Reservasi Hotel menggunakan pola **Model-View-Controller (MVC)** untuk memisahkan data, tampilan, dan proses pengendalian program.
+<img width="386" height="262" alt="image" src="https://github.com/user-attachments/assets/695422ae-81e5-4a85-ac93-f777569fb416" />
 
-Struktur package yang digunakan:
 
-```text
-Source Packages
-│
-├── com.mycompany.reservasihotel
-│   └── SistemReservasiHotel.java
-│
-├── controller
-│   └── ReservasiController.java
-│
-├── model
-│   ├── Reservasi.java
-│   ├── ReservasiStandard.java
-│   └── ReservasiVIP.java
-│
-└── view
-    └── ReservasiView.java
-```
+Gambar di atas menampilkan struktur package pada program Sistem Tracking Reservasi Hotel. Program menerapkan pola MVC (Model, View, Controller) untuk memisahkan bagian data, tampilan, dan proses pengendalian program.
 
-### 1. Package Model
+Struktur program terdiri dari tiga package utama, yaitu:
 
-Package `model` berisi class yang merepresentasikan data dan aturan dari reservasi.
+1. **Package Model**  
+   Package `model` berisi class `Reservasi`, `ReservasiStandard`, dan `ReservasiVIP`. Package ini digunakan untuk menyimpan data serta aturan yang berkaitan dengan reservasi hotel.
 
-Class yang terdapat pada package model adalah:
+2. **Package View**  
+   Package `view` berisi class `ReservasiView` yang digunakan untuk menampilkan menu, daftar reservasi, dan pesan kepada pengguna.
 
-- `Reservasi`
-- `ReservasiStandard`
-- `ReservasiVIP`
+3. **Package Controller**  
+   Package `controller` berisi class `ReservasiController` yang berfungsi sebagai penghubung antara Model dan View. Controller mengatur proses seperti menambah, menampilkan, memperbarui, menghapus, check-in, dan check-out reservasi.
 
-Class `Reservasi` menjadi superclass yang menyimpan data umum reservasi. Sedangkan `ReservasiStandard` dan `ReservasiVIP` merupakan subclass yang memiliki karakteristik masing-masing.
-
-### 2. Package View
-
-Package `view` berisi class `ReservasiView`.
-
-Class ini digunakan untuk menampilkan menu, daftar reservasi, dan pesan kepada pengguna.
-
-View bertugas menangani bagian tampilan program.
-
-### 3. Package Controller
-
-Package `controller` berisi class `ReservasiController`.
-
-Class ini menjadi penghubung antara Model dan View serta mengatur proses program seperti menambah, menampilkan, memperbarui, menghapus, check-in, dan check-out reservasi.
+Selain ketiga package tersebut, terdapat class `SistemReservasiHotel` yang menjadi main classs.
 
 ---
 
