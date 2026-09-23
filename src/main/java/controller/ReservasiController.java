@@ -23,7 +23,7 @@ public class ReservasiController {
 
     private void isiDummyData() {
         buatStandard("Budi Santoso", 2);
-        buatVip("Siti Aminah", 3, ReservasiVIP.PenyambutanLounge).checkIn();
+        buatVip("Siti Aminah", 3, ReservasiVIP.PENYAMBUTAN_LOUNGE ).checkIn();
 
         Reservasi selesai = buatStandard("Andi Wijaya", 1);
         selesai.checkIn();
@@ -62,11 +62,11 @@ public class ReservasiController {
 
             String jenisPenyambutan;
             if (pilihanPenyambutan == 2) {
-                jenisPenyambutan = ReservasiVIP.PenyambutanLounge;
+                jenisPenyambutan = ReservasiVIP.PENYAMBUTAN_LOUNGE ;
             } else if (pilihanPenyambutan == 3) {
-                jenisPenyambutan = ReservasiVIP.PenyambutanAirport;
+                jenisPenyambutan = ReservasiVIP.PENYAMBUTAN_AIRPORT ;
             } else {
-                jenisPenyambutan = ReservasiVIP.PenyambutanReguler;
+                jenisPenyambutan = ReservasiVIP.PENYAMBUTAN_REGULER ;
             }
             r = buatVip(nama, malam, jenisPenyambutan);
         } else {

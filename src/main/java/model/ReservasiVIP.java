@@ -1,13 +1,11 @@
 package model;
 
-// ReservasiVIP IS-A Reservasi — pembeda: jenis penyambutan, tiap jenis punya charge beda
 public class ReservasiVIP extends Reservasi {
 
-    public static final String PenyambutanReguler = "Reguler";
-    public static final String PenyambutanLounge = "Executive Lounge";
-    public static final String PenyambutanAirport = "Airport Pickup + Lounge";
+    public static final String PENYAMBUTAN_REGULER  = "Reguler";
+    public static final String PENYAMBUTAN_LOUNGE  = "Executive Lounge";
+    public static final String PENYAMBUTAN_AIRPORT  = "Airport Pickup + Lounge";
 
-    private static final int BiayaLayanan = 100000;
 
     private String jenisPenyambutan;
     private int chargePenyambutan;
@@ -19,16 +17,16 @@ public class ReservasiVIP extends Reservasi {
 
     public void setJenisPenyambutan(String jenisPenyambutan) {
         switch (jenisPenyambutan) {
-            case PenyambutanLounge:
-                this.jenisPenyambutan = PenyambutanLounge;
+            case PENYAMBUTAN_LOUNGE :
+                this.jenisPenyambutan = PENYAMBUTAN_LOUNGE ;
                 this.chargePenyambutan = 100000;
                 break;
-            case PenyambutanAirport:
-                this.jenisPenyambutan = PenyambutanAirport;
+            case PENYAMBUTAN_AIRPORT :
+                this.jenisPenyambutan = PENYAMBUTAN_AIRPORT ;
                 this.chargePenyambutan = 200000;
                 break;
             default:
-                this.jenisPenyambutan = PenyambutanReguler;
+                this.jenisPenyambutan = PENYAMBUTAN_REGULER ;
                 this.chargePenyambutan = 0;
         }
     }
@@ -43,9 +41,9 @@ public class ReservasiVIP extends Reservasi {
     int biayaKamar = getJumlahMalam() * 750000;
     int biayaPenyambutan = 0;
 
-    if (jenisPenyambutan.equals(PenyambutanLounge)) {
+    if (jenisPenyambutan.equals(PENYAMBUTAN_LOUNGE )) {
         biayaPenyambutan = 100000;
-    } else if (jenisPenyambutan.equals(PenyambutanAirport)) {
+    } else if (jenisPenyambutan.equals(PENYAMBUTAN_AIRPORT )) {
         biayaPenyambutan = 200000;
     }
 
