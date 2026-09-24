@@ -140,7 +140,11 @@ public class ReservasiController {
             view.tampilkanPesan(">> ID tidak ditemukan.");
             return;
         }
-
+        
+        if (Reservasi.CHECK_OUT.equals(r.getStatus())) {
+       view.tampilkanPesan(">> Gagal: tamu sudah check-out.");
+       return;
+   }
         boolean vip = r instanceof ReservasiVIP;
         view.tampilkanMenuUpdate(vip);
 
