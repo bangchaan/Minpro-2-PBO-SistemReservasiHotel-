@@ -283,7 +283,7 @@ Constructor digunakan untuk memberikan nilai awal ketika object dibuat.
 
 Contohnya pada class Reservasi:
 
-public Reservasi(int idReservasi, String namaTamu,
+``` public Reservasi(int idReservasi, String namaTamu,
         int jumlahMalam, int hargaPerMalam) {
 
     this.idReservasi = idReservasi;
@@ -293,6 +293,7 @@ public Reservasi(int idReservasi, String namaTamu,
     setNamaTamu(namaTamu);
     setJumlahMalam(jumlahMalam);
 }
+```
 
 Constructor digunakan untuk menginisialisasi ID reservasi, nama tamu, jumlah malam, harga per malam, dan status awal reservasi.
 
@@ -300,11 +301,11 @@ Pada subclass digunakan super() untuk memanggil constructor superclass.
 
 Contohnya:
 
-public ReservasiStandard(int idReservasi, String namaTamu,
-        int jumlahMalam) {
 
-    super(idReservasi, namaTamu, jumlahMalam, 300000);
-    setDendaPersen(20);
+    public ReservasiStandard(int idReservasi, String namaTamu,
+        int jumlahMalam) {
+      super(idReservasi, namaTamu, jumlahMalam, 300000);
+    setDendaPersen(20)
 }
 
 
@@ -316,28 +317,27 @@ Polymorphism diterapkan dengan menggunakan satu tipe superclass untuk menyimpan 
 
 Pada Controller digunakan:
 
-private ArrayList<Reservasi> daftarReservasi = new ArrayList<>();
+``` private ArrayList<Reservasi> daftarReservasi = new ArrayList<>(); ```
 
 ArrayList tersebut dapat menyimpan:
 
-ReservasiStandard
-
-dan:
-
-ReservasiVIP
+ReservasiStandard dan ReservasiVIP
 
 Contohnya:
 
+```
 Reservasi r = new ReservasiStandard(
         idBerikutnya, namaTamu, jumlahMalam);
+```
 
 atau:
 
+```
 Reservasi r = new ReservasiVIP(
         idBerikutnya, namaTamu, jumlahMalam, jenisPenyambutan);
+```
 
 Meskipun keduanya menggunakan tipe Reservasi, method yang dioverride akan menjalankan perilaku sesuai dengan object sebenarnya.
-
 
 
 ---
