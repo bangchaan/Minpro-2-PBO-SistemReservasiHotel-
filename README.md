@@ -266,182 +266,85 @@ Atribut tersebut tidak dapat diakses secara langsung dari luar class.
 
 Pengambilan data dilakukan melalui getter, sedangkan perubahan data dilakukan melalui setter.
 
-Contoh:
+<img width="342" height="82" alt="image" src="https://github.com/user-attachments/assets/baf382de-9c39-4d58-bc29-ea9bec39151a" />
 
-```java
-public String getNamaTamu() {
-    return namaTamu;
-}
-
-public void setNamaTamu(String namaTamu) {
-    if (namaTamu == null || namaTamu.trim().isEmpty()) {
-        throw new IllegalArgumentException("Nama tamu tidak boleh kosong.");
-    }
-
-    this.namaTamu = namaTamu.trim();
-}
-```
 
 Dengan cara tersebut, data reservasi dapat dikontrol dan divalidasi melalui method yang telah disediakan oleh class.
+
+<img width="596" height="160" alt="image" src="https://github.com/user-attachments/assets/2c4ff06d-124e-460a-bee3-afd676987324" />
+
+Sedangkan untuk mengubah data digunakan setter seperti gambar di atas
 
 ---
 
 ## 3.4 Constructor
 
-Constructor digunakan untuk memberikan nilai awal ketika objek reservasi dibuat.
+Constructor digunakan untuk memberikan nilai awal ketika object dibuat.
 
-Pada class `Reservasi` terdapat constructor:
+Contohnya pada class Reservasi:
 
-```java
 public Reservasi(int idReservasi, String namaTamu,
         int jumlahMalam, int hargaPerMalam) {
 
     this.idReservasi = idReservasi;
     this.hargaPerMalam = hargaPerMalam;
+    this.status = MENUNGGU;
+
     setNamaTamu(namaTamu);
     setJumlahMalam(jumlahMalam);
-    this.status = MENUNGGU;
 }
-```
 
 Constructor digunakan untuk menginisialisasi ID reservasi, nama tamu, jumlah malam, harga per malam, dan status awal reservasi.
 
-Pada subclass, constructor menggunakan `super()` untuk memanggil constructor dari superclass.
+Pada subclass digunakan super() untuk memanggil constructor superclass.
 
-Contoh:
+Contohnya:
 
-```java
-public ReservasiStandard(int idReservasi,
-        String namaTamu, int jumlahMalam) {
+public ReservasiStandard(int idReservasi, String namaTamu,
+        int jumlahMalam) {
 
     super(idReservasi, namaTamu, jumlahMalam, 300000);
-    setDendaPembatalanPersen(20);
+    setDendaPersen(20);
 }
-```
 
-Dengan penggunaan `super()`, data umum reservasi diinisialisasi oleh class `Reservasi`, sedangkan data khusus Standard diinisialisasi oleh `ReservasiStandard`.
 
 ---
 
 ## 3.5 Polymorphism
 
-Polymorphism diterapkan dengan menyimpan objek `ReservasiStandard` dan `ReservasiVIP` ke dalam satu `ArrayList` bertipe `Reservasi`.
+Polymorphism diterapkan dengan menggunakan satu tipe superclass untuk menyimpan object dari subclass yang berbeda.
+
+Pada Controller digunakan:
+
+private ArrayList<Reservasi> daftarReservasi = new ArrayList<>();
+
+ArrayList tersebut dapat menyimpan:
+
+ReservasiStandard
+
+dan:
+
+ReservasiVIP
 
 Contohnya:
 
-```java
-private final ArrayList<Reservasi> daftarReservasi = new ArrayList<>();
-```
-
-Objek Standard:
-
-```java
 Reservasi r = new ReservasiStandard(
-        idBerikutnya,
-        namaTamu,
-        jumlahMalam
-);
-```
+        idBerikutnya, namaTamu, jumlahMalam);
 
-Objek VIP:
+atau:
 
-```java
 Reservasi r = new ReservasiVIP(
-        idBerikutnya,
-        namaTamu,
-        jumlahMalam,
-        jenisPenyambutan
-);
-```
+        idBerikutnya, namaTamu, jumlahMalam, jenisPenyambutan);
 
-Meskipun keduanya disimpan sebagai tipe `Reservasi`, method yang dioverride pada masing-masing subclass akan menjalankan perilaku sesuai objek sebenarnya.
+Meskipun keduanya menggunakan tipe Reservasi, method yang dioverride akan menjalankan perilaku sesuai dengan object sebenarnya.
 
-Contohnya:
 
-```java
-r.getTipe();
-```
-
-akan menghasilkan:
-
-```text
-Standard
-```
-
-jika objek merupakan `ReservasiStandard`, dan:
-
-```text
-VIP
-```
-
-jika objek merupakan `ReservasiVIP`.
-
-Polymorphism juga digunakan pada method `hitungTotalBiaya()` dan `getDetailTambahan()`.
-
----
-
-## 3.6 Getter dan Setter
-
-Getter dan setter digunakan untuk mengakses dan mengubah atribut yang bersifat `private`.
-
-Contoh getter:
-
-```java
-public int getJumlahMalam() {
-    return jumlahMalam;
-}
-```
-
-Contoh setter:
-
-```java
-public void setJumlahMalam(int jumlahMalam) {
-    if (jumlahMalam < 1 || jumlahMalam > 30) {
-        throw new IllegalArgumentException(
-                "Jumlah malam harus 1 - 30.");
-    }
-
-    this.jumlahMalam = jumlahMalam;
-}
-```
-
-Setter juga digunakan untuk melakukan validasi agar data yang dimasukkan sesuai dengan aturan program.
-
----
-
-## 3.7 Validasi Input
-
-Program memiliki validasi input agar program tidak berhenti ketika pengguna memasukkan data yang tidak sesuai.
-
-Validasi angka dilakukan melalui method:
-
-```java
-public int inputAngka(String prompt, int min, int max)
-```
-
-Jika pengguna memasukkan huruf ketika sistem meminta angka, program akan menampilkan:
-
-```text
->> Input harus berupa angka.
-```
-
-Jika angka berada di luar batas yang ditentukan, program akan meminta pengguna memasukkan angka kembali.
-
-Validasi teks juga dilakukan agar input tidak boleh kosong.
-
-Contohnya:
-
-```text
->> Input tidak boleh kosong!
-```
-
-Dengan adanya validasi tersebut, pengguna dapat memperbaiki input tanpa harus menjalankan ulang program.
 
 ---
 
 # BAB IV KESIMPULAN
 
-Sistem Tracking Reservasi Hotel merupakan program Java yang digunakan untuk mengelola dan memantau data reservasi hotel secara sederhana.
+Sistem Reservasi Hotel merupakan program Java yang digunakan untuk mengelola dan memantau data reservasi hotel secara sederhana.
 
 Program menyediakan fitur tambah reservasi, tampilkan reservasi, check-in, check-out, update jumlah malam, dan hapus reservasi. Program juga membedakan reservasi menjadi Standard dan VIP dengan karakteristik dan aturan biaya yang berbeda.
 
