@@ -145,15 +145,15 @@ Fitur Check-Out digunakan untuk mencatat bahwa tamu telah selesai menginap dan k
 
 ## 2.6 Menu Update
 
-<img width="326" height="107" alt="image" src="https://github.com/user-attachments/assets/b3df9b86-ca44-4532-8489-11af040d54c1" />
+<img width="390" height="197" alt="image" src="https://github.com/user-attachments/assets/85ae2222-f5a7-4da6-bea2-db25fcdb742a" />
 
-Gambar di atas menampilkan proses Update Jumlah Malam pada program Sistem Tracking Reservasi Hotel. Pengguna perlu memasukkan ID reservasi yang ingin diperbarui, kemudian memasukkan jumlah malam yang baru. Pada contoh tersebut, pengguna memilih ID reservasi 5 dan mengubah jumlah malam menjadi 13 malam.
+Gambar di atas menampilkan proses Update pada program Sistem Tracking Reservasi Hotel. Pengguna perlu memasukkan ID reservasi yang ingin diperbarui, kemudian memasukkan nama yg ingin diubah. Pada contoh tersebut, pengguna memilih ID reservasi 1 dan mengubah nama menjadi RONO.
 
-<img width="1177" height="210" alt="image" src="https://github.com/user-attachments/assets/87c2f9c8-37e4-4240-b822-36699f5babfe" />
+<img width="902" height="172" alt="Screenshot 2026-09-24 204500" src="https://github.com/user-attachments/assets/9b4afeeb-e01c-4736-806d-eb0869549d31" />
 
-Setelah proses update berhasil, jumlah malam pada reservasi tersebut berubah dari 10 malam menjadi 13 malam. Perubahan tersebut juga memengaruhi total biaya reservasi VIP karena total biaya dihitung berdasarkan jumlah malam dan biaya penyambutan yang dipilih.
+Pada tampilan tersebut, nama tamu pada reservasi dengan ID 1 telah diperbarui menjadi **RONO** melalui fitur Update Reservasi. Perubahan nama tersebut kemudian terlihat pada daftar reservasi saat data ditampilkan kembali.
 
-Dengan adanya fitur ini, pengguna dapat memperbarui lama menginap pada reservasi yang masih aktif tanpa perlu membuat reservasi baru.
+Dengan adanya fitur ini, pengguna dapat memperbarui data pada reservasi yang masih aktif tanpa perlu membuat reservasi baru.
 
 ---
 
@@ -176,34 +176,9 @@ Gambar berikutnya menunjukkan bahwa reservasi dengan ID 1 sudah tidak terdapat d
 
 Menu Keluar digunakan untuk menghentikan program.
 
+# III. PENERAPAN KONSEP PBO
 
----
-
-# BAB III PENERAPAN KONSEP PBO
-
-## 3.1 MVC (Model View Controller)
-
-<img width="386" height="262" alt="image" src="https://github.com/user-attachments/assets/695422ae-81e5-4a85-ac93-f777569fb416" />
-
-
-Gambar di atas menampilkan struktur package pada program Sistem Tracking Reservasi Hotel. Program menerapkan pola MVC (Model, View, Controller) untuk memisahkan bagian data, tampilan, dan proses pengendalian program.
-
-Struktur program terdiri dari tiga package utama, yaitu:
-
-1. **Package Model**  
-   Package `model` berisi class `Reservasi`, `ReservasiStandard`, dan `ReservasiVIP`. Package ini digunakan untuk menyimpan data serta aturan yang berkaitan dengan reservasi hotel.
-
-2. **Package View**  
-   Package `view` berisi class `ReservasiView` yang digunakan untuk menampilkan menu, daftar reservasi, dan pesan kepada pengguna.
-
-3. **Package Controller**  
-   Package `controller` berisi class `ReservasiController` yang berfungsi sebagai penghubung antara Model dan View. Controller mengatur proses seperti menambah, menampilkan, memperbarui, menghapus, check-in, dan check-out reservasi.
-
-Selain ketiga package tersebut, terdapat class `SistemReservasiHotel` yang menjadi main classs.
-
----
-
-## 3.2 Inheritance
+## 3.1 Inheritance
 
 Inheritance digunakan untuk membuat hubungan antara superclass dan subclass.
 
@@ -248,7 +223,7 @@ Setiap jenis penyambutan memiliki biaya tambahan yang berbeda.
 
 ---
 
-## 3.3 Encapsulation
+## 3.2 Encapsulation
 
 Encapsulation diterapkan dengan menggunakan access modifier `private` pada atribut class.
 
@@ -275,9 +250,59 @@ Dengan cara tersebut, data reservasi dapat dikontrol dan divalidasi melalui meth
 
 Sedangkan untuk mengubah data digunakan setter seperti gambar di atas
 
+## 3.3 Access modifier
+
+<img width="538" height="222" alt="Screenshot 2026-09-24 204951" src="https://github.com/user-attachments/assets/31862c73-a2c5-4d12-ae27-db37c5b8f119" />
+
+Gambar di atas menampilkan penggunaan access modifier pada class `Reservasi`. Program menggunakan access modifier `private` pada atribut seperti `idReservasi`, `hargaPerMalam`, `namaTamu`, `jumlahMalam`, dan `status`.
+
+Penggunaan `private` bertujuan agar atribut tersebut tidak dapat diakses secara langsung dari luar class. Sementara itu, beberapa bagian yang perlu digunakan oleh class lain menggunakan access modifier `public`, seperti konstanta status `MENUNGGU`, `CHECK_IN`, dan `CHECK_OUT`.
+
+Dengan adanya access modifier, hak akses terhadap data dalam program dapat diatur sehingga struktur class menjadi lebih terkontrol.
+
+##  Validasi INput
+
+<img width="935" height="702" alt="image" src="https://github.com/user-attachments/assets/4deea54c-2351-4cdd-98f1-1281c93a26e8" />
+
+
+Gambar di atas menampilkan penerapan validasi input pada class `ReservasiController`. Program melakukan validasi terhadap input angka dan input teks agar data yang dimasukkan sesuai dengan ketentuan yang telah ditentukan.
+
+Pada method `inputAngka()`, program menggunakan `Integer.parseInt()` untuk mengubah input menjadi angka. Jika pengguna memasukkan input yang bukan angka, program akan menangkap kesalahan menggunakan `NumberFormatException` dan menampilkan pesan bahwa input harus berupa angka.
+
+Program juga memberikan batas nilai menggunakan parameter `min` dan `max`. Jika angka yang dimasukkan berada di luar batas, program akan meminta pengguna untuk memasukkan angka kembali.
+
+Selain itu, method `inputTeks()` digunakan untuk melakukan validasi pada input teks. Program memastikan teks tidak kosong dan membatasi panjang nama tamu maksimal sesuai dengan nilai `Reservasi.MAKS_NAMA`.
+
+Dengan adanya validasi input, pengguna tidak dapat memasukkan data yang tidak sesuai dengan ketentuan dan program dapat tetap berjalan tanpa langsung mengalami error.
+
+
 ---
 
-## 3.4 Constructor
+# BAB IV PENERAPAN NILAI TAMBAH
+
+## 4.1 MVC (Model View Controller)
+
+<img width="386" height="262" alt="image" src="https://github.com/user-attachments/assets/695422ae-81e5-4a85-ac93-f777569fb416" />
+
+
+Gambar di atas menampilkan struktur package pada program Sistem Tracking Reservasi Hotel. Program menerapkan pola MVC (Model, View, Controller) untuk memisahkan bagian data, tampilan, dan proses pengendalian program.
+
+Struktur program terdiri dari tiga package utama, yaitu:
+
+1. **Package Model**  
+   Package `model` berisi class `Reservasi`, `ReservasiStandard`, dan `ReservasiVIP`. Package ini digunakan untuk menyimpan data serta aturan yang berkaitan dengan reservasi hotel.
+
+2. **Package View**  
+   Package `view` berisi class `ReservasiView` yang digunakan untuk menampilkan menu, daftar reservasi, dan pesan kepada pengguna.
+
+3. **Package Controller**  
+   Package `controller` berisi class `ReservasiController` yang berfungsi sebagai penghubung antara Model dan View. Controller mengatur proses seperti menambah, menampilkan, memperbarui, menghapus, check-in, dan check-out reservasi.
+
+Selain ketiga package tersebut, terdapat class `SistemReservasiHotel` yang menjadi main classs.
+
+---
+
+## 4.2 Constructor
 
 Constructor digunakan untuk memberikan nilai awal ketika object dibuat.
 
@@ -311,7 +336,7 @@ Contohnya:
 
 ---
 
-## 3.5 Polymorphism
+## 4.3 Polymorphism
 
 Polymorphism diterapkan dengan menggunakan satu tipe superclass untuk menyimpan object dari subclass yang berbeda.
 
@@ -342,7 +367,7 @@ Meskipun keduanya menggunakan tipe Reservasi, method yang dioverride akan menjal
 
 ---
 
-# BAB IV KESIMPULAN
+# BAB V KESIMPULAN
 
 Sistem Reservasi Hotel merupakan program Java yang digunakan untuk mengelola dan memantau data reservasi hotel secara sederhana.
 
